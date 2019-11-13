@@ -10,7 +10,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [restaurant, setRestaurant] = useState([]);
   const [menu, setMenu] = useState([]);
-  const [products, setProducts] = useState(["Test"]);
+  const [products, setProducts] = useState([]);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -22,25 +22,10 @@ function App() {
 
   const addProduct = product => {
     const newProducts = [...products];
-
-    let isFound = false;
-
-    for (let i = 0; i < newProducts.length; i++) {
-      if (newProducts[i].id === product.id) {
-        newProducts[i].quantity = newProducts[i].quantity + 1;
-        isFound = true;
-
-        break;
-      }
-    }
-
-    if (isFound === false) {
-      product.quantity = 1;
-      newProducts.push(product);
-    }
-
-    products = newProducts;
+    newProducts.push(product);
+    setProducts(newProducts);
   };
+  console.log(products);
 
   useEffect(() => {
     fetchData();
@@ -60,9 +45,9 @@ function App() {
             <Heroe restaurant={restaurant} />
           </div>
           <div className="menuName">
-            <Menu menu={menu} />
+            <Menu menu={menu} add={addProduct} />
             <div className="containOfCard">
-              <Card />
+              <Card product={products} />
             </div>
           </div>
         </div>
